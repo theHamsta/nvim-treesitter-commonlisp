@@ -1,16 +1,17 @@
 local query = require"vim.treesitter.query"
+local get_node_text = require"vim.treesitter".get_node_text or query.get_node_text
 
 query.add_predicate("cl-standard-function?", function(match, pattern, bufnr, predicate)
   local lisp_symbols = require'nvim-treesitter-commonlisp.standard-functions'
   local node = match[predicate[2]]
-  local node_text = query.get_node_text(node, bufnr)
+  local node_text = get_node_text(node, bufnr)
   return lisp_symbols[node_text:lower()] ~= nil
 end)
 
 query.add_predicate("cl-standard-macro?", function(match, pattern, bufnr, predicate)
   local lisp_symbols = require'nvim-treesitter-commonlisp.standard-macros'
   local node = match[predicate[2]]
-  local node_text = query.get_node_text(node, bufnr)
+  local node_text = get_node_text(node, bufnr)
   return lisp_symbols[node_text:lower()] ~= nil
 end)
 
